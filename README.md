@@ -23,7 +23,7 @@ make
 make
 ```
 
-Add `--disable-mctp` for a TPM-only build that drops the standard DMTF requester entirely, and `--enable-nuvoton` / `--enable-nations` for vendor TPM commands. Each piece is independent, so you can compose exactly what you want: `--enable-tcg` alone gives just the TCG binding (PSK and the responder stay off until you enable them).
+Add `--disable-mctp` for a TPM-only build that drops the standard DMTF requester entirely, and `--enable-nuvoton` / `--enable-nations` / `--enable-infineon` for vendor TPM commands. Each piece is independent, so you can compose exactly what you want: `--enable-tcg` alone gives just the TCG binding (PSK and the responder stay off until you enable them).
 
 ## Main Features
 
@@ -89,7 +89,7 @@ make check
 | `--disable-meas` / `--disable-challenge` | Compile out GET_MEASUREMENTS / CHALLENGE (default: enabled) |
 | `--disable-heartbeat` / `--disable-key-update` | Compile out HEARTBEAT / KEY_UPDATE (default: enabled) |
 | `--disable-app-data` | Compile out `SendData`/`ReceiveData` MCTP application messages and `Encrypt`/`DecryptMessage` (default: enabled) |
-| `--enable-tcg` / `--enable-nuvoton` / `--enable-nations` / `--enable-psk` / `--enable-responder` | TPM side: TCG SPDM binding, vendor commands, PSK and the responder (default: all disabled, so a standalone build carries none of it) |
+| `--enable-tcg` / `--enable-nuvoton` / `--enable-nations` / `--enable-infineon` / `--enable-psk` / `--enable-responder` | TPM side: TCG SPDM binding, vendor commands, PSK and the responder (default: all disabled, so a standalone build carries none of it) |
 | `--disable-mctp` | Pure TCG build: drops MCTP secured messages and the whole standard requester (needs `--enable-tcg` or a vendor) |
 | `--with-wolfssl=PATH` | wolfSSL installation path |
 | `CFLAGS=-DWOLFSPDM_DATA_TRANSFER_SIZE=N` | Largest single SPDM message, 42 to 4096 (default 4096). Smaller values shrink the per-message transport buffers; larger messages then travel in CHUNK_SEND/CHUNK_GET pieces when the responder supports chunking |

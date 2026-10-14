@@ -1,8 +1,8 @@
 # API Reference
 
 Public APIs are declared in `wolfspdm/spdm.h`, plus `wolfspdm/spdm_tcg.h`,
-`spdm_nuvoton.h`, `spdm_nations.h`, `spdm_psk.h`, and `spdm_responder.h` for
-the TPM/TCG side.
+`spdm_nuvoton.h`, `spdm_nations.h`, `spdm_infineon.h`, `spdm_psk.h`, and
+`spdm_responder.h` for the TPM/TCG side.
 
 All APIs return `WOLFSPDM_SUCCESS` (`0`) on success unless documented
 otherwise; failures are negative error codes from `wolfspdm/spdm_error.h`.
@@ -17,8 +17,8 @@ otherwise; failures are negative error codes from `wolfspdm/spdm_error.h`.
 
 ## Configuration
 
-- `wolfSPDM_SetIO`
-- `wolfSPDM_SetMode` / `wolfSPDM_GetMode` *(`WOLFSPDM_MODE_AUTO` / `_NUVOTON` / `_NATIONS` / `_NATIONS_PSK`)*
+- `wolfSPDM_SetIO` / `wolfSPDM_HasIO`
+- `wolfSPDM_SetMode` / `wolfSPDM_GetMode` *(`WOLFSPDM_MODE_AUTO` / `_NUVOTON` / `_NATIONS` / `_NATIONS_PSK`, alias `_PSK` / `_TCG`)*. `_TCG` is the TCG binding with no vendor commands; `_AUTO` picks it when no vendor adapter is compiled in.
 - `wolfSPDM_SetResponderPubKey`: pin the responder key (96-byte P-384 X‖Y) for cert-less operation
 - `wolfSPDM_SetRequesterKeyPair` *(`WOLFSPDM_MUTUAL_AUTH` builds, TCG or TPM profile)*
 - `wolfSPDM_SetMaxVersion`: cap the negotiated version (0x12-0x14)
@@ -87,6 +87,13 @@ otherwise; failures are negative error codes from `wolfspdm/spdm_error.h`.
 - `wolfSPDM_Nations_GetStatus`
 - `wolfSPDM_Nations_SetOnlyMode`
 - `wolfSPDM_Nations_PskSet` / `wolfSPDM_Nations_PskClear` / `wolfSPDM_Nations_PskClearWithVCA`
+
+## Infineon (`wolfspdm/spdm_infineon.h`, `WOLFSPDM_INFINEON`)
+
+- `wolfSPDM_Infineon_GetStatus`
+- `wolfSPDM_Infineon_SetOnlyMode`
+
+The SLB9678 identity flow itself is plain TCG, so it needs no adapter: set `WOLFSPDM_MODE_TCG` and connect. The calls above are the vendor commands on top of it.
 
 ## PSK (`wolfspdm/spdm_psk.h`, `WOLFSPDM_PSK`)
 
